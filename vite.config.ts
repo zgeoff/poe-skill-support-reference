@@ -7,7 +7,7 @@ export default defineConfig({
   plugins: [react(), tailwindcss()],
   base: '/poe-imbued-gems/',
   build: {
-    outDir: '../docs',
+    outDir: 'docs',
     emptyOutDir: true,
   },
   resolve: {
