@@ -54,14 +54,23 @@ export default function App() {
   return (
     <div className="min-h-screen bg-[#0a0a0f]">
       <div className="max-w-2xl mx-auto px-4">
-        <header className="py-6">
+        <header className="py-6 relative">
           <h1 className="text-2xl font-semibold text-[#e8e4d8] text-balance">
-            Imbued Gem Reference
+            Path of Exile Imbued Gem Reference
           </h1>
           <p className="text-sm text-[#6b6a63]">
             Below is a list of skill gems and their possible imbuement outcomes. No guarantees on
             accuracy of the data.
           </p>
+          <a
+            href="https://github.com/zgeoff/poe-imbued-gem-reference"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="absolute top-6 right-0 text-[#6b6a63] hover:text-[#a38d6d] transition-colors"
+            aria-label="GitHub repository"
+          >
+            <Github size={20} />
+          </a>
         </header>
         <div className="sticky top-0 z-10 bg-[#0a0a0f] pt-3 pb-3 space-y-3">
           <SearchBar
@@ -86,17 +95,6 @@ export default function App() {
             onUnpin={unpin}
           />
         </main>
-        <footer className="py-6 text-center text-[#6b6a63]">
-          <a
-            href="https://github.com/zgeoff/poe-imbued-gem-reference"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex items-center hover:text-[#a38d6d] transition-colors"
-            aria-label="GitHub repository"
-          >
-            <Github size={20} />
-          </a>
-        </footer>
       </div>
     </div>
   );
