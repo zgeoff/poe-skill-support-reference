@@ -1,0 +1,15 @@
+pre-commit:
+  parallel: true
+  commands:
+    lint:
+      root: site/
+      glob: "*.{ts,tsx,js,jsx,json}"
+      run: bunx biome check --no-errors-on-unmatched {staged_files}
+    typecheck:
+      root: site/
+      run: bunx tsc --noEmit
+
+commit-msg:
+  commands:
+    commitlint:
+      run: bunx commitlint --edit {1}

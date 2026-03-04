@@ -1,4 +1,4 @@
-import { useState, useCallback } from 'react';
+import { useCallback, useState } from 'react';
 
 const STORAGE_KEY = 'imbued-pinned';
 
@@ -58,10 +58,7 @@ export function usePinnedSkills(): UsePinnedSkillsReturn {
     });
   }, []);
 
-  const isPinned = useCallback(
-    (name: string) => pinnedNames.has(name),
-    [pinnedNames],
-  );
+  const isPinned = useCallback((name: string) => pinnedNames.has(name), [pinnedNames]);
 
   return { pinnedNames, pin, unpin, togglePin, isPinned };
 }

@@ -1,6 +1,6 @@
-import { describe, it, expect, beforeEach } from 'vitest';
 import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
+import { beforeEach, describe, expect, it } from 'vitest';
 import App from '@/App';
 
 beforeEach(() => {
@@ -18,7 +18,18 @@ describe('App', () => {
   it('shows all skills listed alphabetically on initial load', async () => {
     render(<App />);
     await screen.findByText('Arc');
-    const skillNames = ['Arc', 'Automation', 'Ball Lightning', 'Cleave', 'Cyclone', 'Frostbolt', 'Maelstr\u00f6m', 'Poisonstrike', 'Rain of Arrows', 'Shield Charge'];
+    const skillNames = [
+      'Arc',
+      'Automation',
+      'Ball Lightning',
+      'Cleave',
+      'Cyclone',
+      'Frostbolt',
+      'Maelstr\u00f6m',
+      'Poisonstrike',
+      'Rain of Arrows',
+      'Shield Charge',
+    ];
     for (const name of skillNames) {
       expect(screen.getByText(name)).toBeInTheDocument();
     }

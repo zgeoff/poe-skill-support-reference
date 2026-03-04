@@ -1,6 +1,6 @@
-import { useState, useMemo, useCallback, useRef, useEffect } from 'react';
-import type { SkillGem, GemColor } from '@/types';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { buildSearchIndex } from '@/lib/search';
+import type { GemColor, SkillGem } from '@/types';
 
 interface HashState {
   query: string;
@@ -50,7 +50,9 @@ export function useSkillSearch(skills: SkillGem[]): UseSkillSearchReturn {
 
   // Keep a ref to expanded set for use in callbacks (setQuery, setColorFilter, toggleExpanded)
   const expandedRef = useRef(expanded);
-  useEffect(() => { expandedRef.current = expanded; });
+  useEffect(() => {
+    expandedRef.current = expanded;
+  });
 
   // Cleanup timers
   useEffect(() => {
@@ -94,35 +96,56 @@ export function useSkillSearch(skills: SkillGem[]): UseSkillSearchReturn {
     return () => window.removeEventListener('hashchange', onHashChange);
   }, []);
 
-  const setQuery = useCallback((q: string) => {
-    setQueryRaw(q);
-    if (debounceRef.current) clearTimeout(debounceRef.current);
-    debounceRef.current = setTimeout(() => setDebouncedQuery(q), 150);
+  const setQuery = useCallback(
+    (q: string) => {
+      setQueryRaw(q);
+      if (debounceRef.current) clearTimeout(debounceRef.current);
+      debounceRef.current = setTimeout(() => setDebouncedQuery(q), 150);
 
-    // replaceState for query changes (they're frequent)
-    const state: HashState = { query: q, expanded: expandedRef.current, colorFilter: colorFilterRef.current };
-    updateHash(state, true);
-  }, [updateHash]);
+      // replaceState for query changes (they're frequent)
+      const state: HashState = {
+        query: q,
+        expanded: expandedRef.current,
+        colorFilter: colorFilterRef.current,
+      };
+      updateHash(state, true);
+    },
+    [updateHash],
+  );
 
-  const setColorFilter = useCallback((color: GemColor | 'all') => {
-    setColorFilterRaw(color);
-    const state: HashState = { query: queryRef.current, expanded: expandedRef.current, colorFilter: color };
-    updateHash(state, false);
-  }, [updateHash]);
-
-  const toggleExpanded = useCallback((name: string) => {
-    setExpanded((prev) => {
-      const next = new Set(prev);
-      if (next.has(name)) {
-        next.delete(name);
-      } else {
-        next.add(name);
-      }
-      const state: HashState = { query: queryRef.current, expanded: next, colorFilter: colorFilterRef.current };
+  const setColorFilter = useCallback(
+    (color: GemColor | 'all') => {
+      setColorFilterRaw(color);
+      const state: HashState = {
+        query: queryRef.current,
+        expanded: expandedRef.current,
+        colorFilter: color,
+      };
       updateHash(state, false);
-      return next;
-    });
-  }, [updateHash]);
+    },
+    [updateHash],
+  );
+
+  const toggleExpanded = useCallback(
+    (name: string) => {
+      setExpanded((prev) => {
+        const next = new Set(prev);
+        if (next.has(name)) {
+          next.delete(name);
+        } else {
+          next.add(name);
+        }
+        const state: HashState = {
+          query: queryRef.current,
+          expanded: next,
+          colorFilter: colorFilterRef.current,
+        };
+        updateHash(state, false);
+        return next;
+      });
+    },
+    [updateHash],
+  );
 
   const isExpanded = useCallback((name: string) => expanded.has(name), [expanded]);
 

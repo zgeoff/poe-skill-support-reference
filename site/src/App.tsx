@@ -1,13 +1,14 @@
-import { useGemData } from '@/hooks/useGemData';
-import { useSkillSearch } from '@/hooks/useSkillSearch';
-import { usePinnedSkills } from '@/hooks/usePinnedSkills';
-import { SearchBar } from '@/components/SearchBar';
 import { ColorFilter } from '@/components/ColorFilter';
+import { SearchBar } from '@/components/SearchBar';
 import { SkillList } from '@/components/SkillList';
+import { useGemData } from '@/hooks/useGemData';
+import { usePinnedSkills } from '@/hooks/usePinnedSkills';
+import { useSkillSearch } from '@/hooks/useSkillSearch';
 
 export default function App() {
   const { skills, loading, error } = useGemData();
-  const { query, setQuery, colorFilter, setColorFilter, results, isExpanded, toggleExpanded } = useSkillSearch(skills);
+  const { query, setQuery, colorFilter, setColorFilter, results, isExpanded, toggleExpanded } =
+    useSkillSearch(skills);
   const { pinnedNames, isPinned, togglePin, unpin } = usePinnedSkills();
 
   const pinnedSkills = skills.filter((s) => pinnedNames.has(s.name));

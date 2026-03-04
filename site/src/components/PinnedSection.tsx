@@ -1,6 +1,6 @@
 import { useState } from 'react';
-import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
 import { SkillRow } from '@/components/SkillRow';
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
 import type { SkillGem } from '@/types';
 
 interface PinnedSectionProps {
@@ -12,9 +12,18 @@ interface PinnedSectionProps {
 
 const COLLAPSED_KEY = 'imbued-pinned-collapsed';
 
-export function PinnedSection({ pinnedSkills, isExpanded, onToggleExpand, onUnpin }: PinnedSectionProps) {
+export function PinnedSection({
+  pinnedSkills,
+  isExpanded,
+  onToggleExpand,
+  onUnpin,
+}: PinnedSectionProps) {
   const [collapsed, setCollapsed] = useState(() => {
-    try { return localStorage.getItem(COLLAPSED_KEY) === 'true'; } catch { return false; }
+    try {
+      return localStorage.getItem(COLLAPSED_KEY) === 'true';
+    } catch {
+      return false;
+    }
   });
 
   if (pinnedSkills.length === 0) return null;

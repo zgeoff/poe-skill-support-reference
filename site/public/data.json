@@ -110,26 +110,16 @@
       "Eternal Blessing Support",
       "Guardian's Blessing Support"
     ],
-    "Animate Guardian": [
-      "Spell Totem Support",
-      "Cast when Damage Taken Support"
-    ],
-    "Animate Guardian of Smiting": [
-      "Spell Totem Support",
-      "Cast when Damage Taken Support"
-    ],
-    "Autoexertion": [
-      "Arrogance Support"
-    ],
+    "Animate Guardian": ["Spell Totem Support", "Cast when Damage Taken Support"],
+    "Animate Guardian of Smiting": ["Spell Totem Support", "Cast when Damage Taken Support"],
+    "Autoexertion": ["Arrogance Support"],
     "Battlemage's Cry": [
       "More Duration Support",
       "Less Duration Support",
       "Urgent Orders Support",
       "Corrupting Cry Support"
     ],
-    "Berserk": [
-      "Cast when Damage Taken Support"
-    ],
+    "Berserk": ["Cast when Damage Taken Support"],
     "Bladestorm": [
       "Added Fire Damage Support",
       "Knockback Support",
@@ -192,9 +182,7 @@
       "Volatility Support",
       "Overexertion Support"
     ],
-    "Blood and Sand": [
-      "Arrogance Support"
-    ],
+    "Blood and Sand": ["Arrogance Support"],
     "Boneshatter": [
       "Added Fire Damage Support",
       "Knockback Support",
@@ -524,15 +512,8 @@
       "Overexertion Support",
       "Expert Retaliation Support"
     ],
-    "Decoy Totem": [
-      "Multiple Totems Support",
-      "Flamewood Support"
-    ],
-    "Defiance Banner": [
-      "More Duration Support",
-      "Less Duration Support",
-      "Generosity Support"
-    ],
+    "Decoy Totem": ["Multiple Totems Support", "Flamewood Support"],
+    "Defiance Banner": ["More Duration Support", "Less Duration Support", "Generosity Support"],
     "Determination": [
       "Arrogance Support",
       "Spell Totem Support",
@@ -541,10 +522,7 @@
       "Eternal Blessing Support",
       "Guardian's Blessing Support"
     ],
-    "Devouring Totem": [
-      "Multiple Totems Support",
-      "Flamewood Support"
-    ],
+    "Devouring Totem": ["Multiple Totems Support", "Flamewood Support"],
     "Dominating Blow": [
       "Added Fire Damage Support",
       "Knockback Support",
@@ -613,11 +591,7 @@
       "Volatility Support",
       "Overexertion Support"
     ],
-    "Dread Banner": [
-      "More Duration Support",
-      "Less Duration Support",
-      "Generosity Support"
-    ],
+    "Dread Banner": ["More Duration Support", "Less Duration Support", "Generosity Support"],
     "Earthquake": [
       "Added Fire Damage Support",
       "Knockback Support",
@@ -858,15 +832,8 @@
       "Brutality Support",
       "Cruelty Support"
     ],
-    "Flame Link": [
-      "More Duration Support",
-      "Less Duration Support"
-    ],
-    "Flesh and Stone": [
-      "Arrogance Support",
-      "Eternal Blessing Support",
-      "Maim Support"
-    ],
+    "Flame Link": ["More Duration Support", "Less Duration Support"],
+    "Flesh and Stone": ["Arrogance Support", "Eternal Blessing Support", "Maim Support"],
     "Frozen Legion": [
       "Added Fire Damage Support",
       "Knockback Support",
@@ -1561,9 +1528,7 @@
       "Volatility Support",
       "Overexertion Support"
     ],
-    "Petrified Blood": [
-      "Arrogance Support"
-    ],
+    "Petrified Blood": ["Arrogance Support"],
     "Pride": [
       "Arrogance Support",
       "Spell Totem Support",
@@ -1572,10 +1537,7 @@
       "Guardian's Blessing Support",
       "Generosity Support"
     ],
-    "Protective Link": [
-      "More Duration Support",
-      "Less Duration Support"
-    ],
+    "Protective Link": ["More Duration Support", "Less Duration Support"],
     "Punishment": [
       "More Duration Support",
       "Spell Totem Support",
@@ -1674,10 +1636,7 @@
       "Cruelty Support",
       "Inspiration Support"
     ],
-    "Rejuvenation Totem": [
-      "Multiple Totems Support",
-      "Flamewood Support"
-    ],
+    "Rejuvenation Totem": ["Multiple Totems Support", "Flamewood Support"],
     "Searing Bond": [
       "Iron Will Support",
       "Burning Damage Support",
@@ -1908,30 +1867,12 @@
       "Cast when Damage Taken Support",
       "Less Duration Support"
     ],
-    "Summon Flame Golem": [
-      "Spell Totem Support",
-      "Cast when Damage Taken Support"
-    ],
-    "Summon Flame Golem of Hordes": [
-      "Spell Totem Support",
-      "Cast when Damage Taken Support"
-    ],
-    "Summon Flame Golem of the Meteor": [
-      "Spell Totem Support",
-      "Cast when Damage Taken Support"
-    ],
-    "Summon Stone Golem": [
-      "Spell Totem Support",
-      "Cast when Damage Taken Support"
-    ],
-    "Summon Stone Golem of Hordes": [
-      "Spell Totem Support",
-      "Cast when Damage Taken Support"
-    ],
-    "Summon Stone Golem of Safeguarding": [
-      "Spell Totem Support",
-      "Cast when Damage Taken Support"
-    ],
+    "Summon Flame Golem": ["Spell Totem Support", "Cast when Damage Taken Support"],
+    "Summon Flame Golem of Hordes": ["Spell Totem Support", "Cast when Damage Taken Support"],
+    "Summon Flame Golem of the Meteor": ["Spell Totem Support", "Cast when Damage Taken Support"],
+    "Summon Stone Golem": ["Spell Totem Support", "Cast when Damage Taken Support"],
+    "Summon Stone Golem of Hordes": ["Spell Totem Support", "Cast when Damage Taken Support"],
+    "Summon Stone Golem of Safeguarding": ["Spell Totem Support", "Cast when Damage Taken Support"],
     "Sunder": [
       "Added Fire Damage Support",
       "Knockback Support",
@@ -2438,10 +2379,7 @@
       "Cruelty Support",
       "Cast when Damage Taken Support"
     ],
-    "Vaal Rejuvenation Totem": [
-      "Multiple Totems Support",
-      "Flamewood Support"
-    ],
+    "Vaal Rejuvenation Totem": ["Multiple Totems Support", "Flamewood Support"],
     "Vaal Smite": [
       "Added Fire Damage Support",
       "Knockback Support",
@@ -2635,15 +2573,8 @@
       "Less Duration Support",
       "Cast when Damage Taken Support"
     ],
-    "War Banner": [
-      "More Duration Support",
-      "Less Duration Support",
-      "Generosity Support"
-    ],
-    "Warlord's Mark": [
-      "Spell Totem Support",
-      "Cast when Damage Taken Support"
-    ]
+    "War Banner": ["More Duration Support", "Less Duration Support", "Generosity Support"],
+    "Warlord's Mark": ["Spell Totem Support", "Cast when Damage Taken Support"]
   },
   "green": {
     "Alchemist's Mark": [
@@ -2652,25 +2583,11 @@
       "Swift Affliction Support",
       "Mark On Hit Support"
     ],
-    "Ambush": [
-      "Cast on Death Support",
-      "Swift Affliction Support",
-      "Second Wind Support"
-    ],
-    "Animate Weapon": [
-      "Swift Affliction Support",
-      "Withering Touch Support"
-    ],
-    "Animate Weapon of Ranged Arms": [
-      "Swift Affliction Support"
-    ],
-    "Animate Weapon of Self Reflection": [
-      "Swift Affliction Support"
-    ],
-    "Arctic Armour": [
-      "Swift Affliction Support",
-      "Second Wind Support"
-    ],
+    "Ambush": ["Cast on Death Support", "Swift Affliction Support", "Second Wind Support"],
+    "Animate Weapon": ["Swift Affliction Support", "Withering Touch Support"],
+    "Animate Weapon of Ranged Arms": ["Swift Affliction Support"],
+    "Animate Weapon of Self Reflection": ["Swift Affliction Support"],
+    "Arctic Armour": ["Swift Affliction Support", "Second Wind Support"],
     "Artillery Ballista": [
       "Faster Attacks Support",
       "Greater Multiple Projectiles Support",
@@ -3404,11 +3321,7 @@
       "Rupture Support",
       "Windburst Support"
     ],
-    "Blood Rage": [
-      "Cast on Death Support",
-      "Swift Affliction Support",
-      "Second Wind Support"
-    ],
+    "Blood Rage": ["Cast on Death Support", "Swift Affliction Support", "Second Wind Support"],
     "Burning Arrow": [
       "Faster Attacks Support",
       "Greater Multiple Projectiles Support",
@@ -3836,9 +3749,7 @@
       "Rupture Support",
       "Windburst Support"
     ],
-    "Dash": [
-      "Second Wind Support"
-    ],
+    "Dash": ["Second Wind Support"],
     "Desecrate": [
       "Trap Support",
       "Cast on Death Support",
@@ -4872,18 +4783,10 @@
       "Rupture Support",
       "Windburst Support"
     ],
-    "Grace": [
-      "Second Wind Support"
-    ],
-    "Haste": [
-      "Second Wind Support"
-    ],
-    "Hatred": [
-      "Second Wind Support"
-    ],
-    "Herald of Agony": [
-      "Second Wind Support"
-    ],
+    "Grace": ["Second Wind Support"],
+    "Haste": ["Second Wind Support"],
+    "Hatred": ["Second Wind Support"],
+    "Herald of Agony": ["Second Wind Support"],
     "Herald of Ice": [
       "Added Cold Damage Support",
       "Culling Strike Support",
@@ -5039,9 +4942,7 @@
       "Sadism Support",
       "Rupture Support"
     ],
-    "Intuitive Link": [
-      "Swift Affliction Support"
-    ],
+    "Intuitive Link": ["Swift Affliction Support"],
     "Lacerate": [
       "Faster Attacks Support",
       "Added Cold Damage Support",
@@ -5497,19 +5398,9 @@
       "Rupture Support",
       "Windburst Support"
     ],
-    "Phase Run": [
-      "Cast on Death Support",
-      "Swift Affliction Support",
-      "Second Wind Support"
-    ],
-    "Plague Bearer": [
-      "Second Wind Support"
-    ],
-    "Poacher's Mark": [
-      "Trap Support",
-      "Cast on Death Support",
-      "Mark On Hit Support"
-    ],
+    "Phase Run": ["Cast on Death Support", "Swift Affliction Support", "Second Wind Support"],
+    "Plague Bearer": ["Second Wind Support"],
+    "Poacher's Mark": ["Trap Support", "Cast on Death Support", "Mark On Hit Support"],
     "Poisonous Concoction": [
       "Faster Attacks Support",
       "Greater Multiple Projectiles Support",
@@ -5594,9 +5485,7 @@
       "Rupture Support",
       "Windburst Support"
     ],
-    "Precision": [
-      "Second Wind Support"
-    ],
+    "Precision": ["Second Wind Support"],
     "Puncture": [
       "Faster Attacks Support",
       "Greater Multiple Projectiles Support",
@@ -5670,9 +5559,7 @@
       "Rupture Support",
       "Windburst Support"
     ],
-    "Purity of Ice": [
-      "Second Wind Support"
-    ],
+    "Purity of Ice": ["Second Wind Support"],
     "Rain of Arrows": [
       "Faster Attacks Support",
       "Greater Multiple Projectiles Support",
@@ -6306,11 +6193,7 @@
       "Rupture Support",
       "Windburst Support"
     ],
-    "Sniper's Mark": [
-      "Trap Support",
-      "Cast on Death Support",
-      "Mark On Hit Support"
-    ],
+    "Sniper's Mark": ["Trap Support", "Cast on Death Support", "Mark On Hit Support"],
     "Spectral Helix": [
       "Faster Attacks Support",
       "Greater Multiple Projectiles Support",
@@ -6906,26 +6789,11 @@
       "Rupture Support",
       "Windburst Support"
     ],
-    "Summon Ice Golem": [
-      "Trap Support",
-      "Second Wind Support"
-    ],
-    "Summon Ice Golem of Hordes": [
-      "Trap Support",
-      "Second Wind Support"
-    ],
-    "Summon Ice Golem of Shattering": [
-      "Trap Support",
-      "Second Wind Support"
-    ],
-    "Temporal Chains": [
-      "Trap Support",
-      "Cast on Death Support",
-      "Swift Affliction Support"
-    ],
-    "Temporal Rift": [
-      "Second Wind Support"
-    ],
+    "Summon Ice Golem": ["Trap Support", "Second Wind Support"],
+    "Summon Ice Golem of Hordes": ["Trap Support", "Second Wind Support"],
+    "Summon Ice Golem of Shattering": ["Trap Support", "Second Wind Support"],
+    "Temporal Chains": ["Trap Support", "Cast on Death Support", "Swift Affliction Support"],
+    "Temporal Rift": ["Second Wind Support"],
     "Thunderstorm": [
       "Faster Attacks Support",
       "Faster Projectiles Support",
@@ -7230,13 +7098,8 @@
       "Sadism Support",
       "Rupture Support"
     ],
-    "Vaal Animate Weapon": [
-      "Swift Affliction Support"
-    ],
-    "Vaal Arctic Armour": [
-      "Swift Affliction Support",
-      "Second Wind Support"
-    ],
+    "Vaal Animate Weapon": ["Swift Affliction Support"],
+    "Vaal Arctic Armour": ["Swift Affliction Support", "Second Wind Support"],
     "Vaal Blade Flurry": [
       "Faster Attacks Support",
       "Added Cold Damage Support",
@@ -7480,14 +7343,8 @@
       "Windburst Support",
       "Second Wind Support"
     ],
-    "Vaal Grace": [
-      "Swift Affliction Support",
-      "Second Wind Support"
-    ],
-    "Vaal Haste": [
-      "Swift Affliction Support",
-      "Second Wind Support"
-    ],
+    "Vaal Grace": ["Swift Affliction Support", "Second Wind Support"],
+    "Vaal Haste": ["Swift Affliction Support", "Second Wind Support"],
     "Vaal Ice Shot": [
       "Faster Attacks Support",
       "Faster Projectiles Support",
@@ -7533,10 +7390,7 @@
       "Manaforged Arrows Support",
       "Locus Mine Support"
     ],
-    "Vaal Impurity of Ice": [
-      "Swift Affliction Support",
-      "Second Wind Support"
-    ],
+    "Vaal Impurity of Ice": ["Swift Affliction Support", "Second Wind Support"],
     "Vaal Lightning Arrow": [
       "Faster Attacks Support",
       "Greater Multiple Projectiles Support",
@@ -7768,9 +7622,7 @@
       "Arrow Nova Support",
       "Greater Volley Support"
     ],
-    "Vampiric Link": [
-      "Swift Affliction Support"
-    ],
+    "Vampiric Link": ["Swift Affliction Support"],
     "Venom Gyre": [
       "Faster Attacks Support",
       "Greater Multiple Projectiles Support",
@@ -8035,11 +7887,7 @@
       "Rupture Support",
       "Windburst Support"
     ],
-    "Withering Step": [
-      "Cast on Death Support",
-      "Swift Affliction Support",
-      "Second Wind Support"
-    ]
+    "Withering Step": ["Cast on Death Support", "Swift Affliction Support", "Second Wind Support"]
   },
   "blue": {
     "Arc": [
@@ -8622,14 +8470,8 @@
       "Arcane Surge Support",
       "High-Impact Mine Support"
     ],
-    "Brand Recall": [
-      "Cast when Stunned Support",
-      "Arcane Surge Support"
-    ],
-    "Clarity": [
-      "Increased Area of Effect Support",
-      "Concentrated Effect Support"
-    ],
+    "Brand Recall": ["Cast when Stunned Support", "Arcane Surge Support"],
+    "Clarity": ["Increased Area of Effect Support", "Concentrated Effect Support"],
     "Cold Snap": [
       "Increased Area of Effect Support",
       "Added Lightning Damage Support",
@@ -9145,10 +8987,7 @@
       "Sacrifice Support",
       "Living Lightning Support"
     ],
-    "Discipline": [
-      "Increased Area of Effect Support",
-      "Concentrated Effect Support"
-    ],
+    "Discipline": ["Increased Area of Effect Support", "Concentrated Effect Support"],
     "Divine Ire": [
       "Increased Area of Effect Support",
       "Added Lightning Damage Support",
@@ -9319,10 +9158,7 @@
       "Cursed Ground Support",
       "Hex Bloom Support"
     ],
-    "Energy Blade": [
-      "Faster Casting Support",
-      "Arcane Surge Support"
-    ],
+    "Energy Blade": ["Faster Casting Support", "Arcane Surge Support"],
     "Enfeeble": [
       "Increased Area of Effect Support",
       "Faster Casting Support",
@@ -11914,10 +11750,7 @@
       "Sacrifice Support",
       "Living Lightning Support"
     ],
-    "Malevolence": [
-      "Increased Area of Effect Support",
-      "Concentrated Effect Support"
-    ],
+    "Malevolence": ["Increased Area of Effect Support", "Concentrated Effect Support"],
     "Manabond": [
       "Increased Area of Effect Support",
       "Added Lightning Damage Support",
@@ -12265,14 +12098,8 @@
       "Sacrifice Support",
       "Living Lightning Support"
     ],
-    "Purity of Elements": [
-      "Increased Area of Effect Support",
-      "Concentrated Effect Support"
-    ],
-    "Purity of Lightning": [
-      "Increased Area of Effect Support",
-      "Concentrated Effect Support"
-    ],
+    "Purity of Elements": ["Increased Area of Effect Support", "Concentrated Effect Support"],
+    "Purity of Lightning": ["Increased Area of Effect Support", "Concentrated Effect Support"],
     "Pyroclast Mine": [
       "Increased Area of Effect Support",
       "Added Lightning Damage Support",
@@ -14465,13 +14292,7 @@
       "Infused Channelling Support",
       "Focused Channelling Support"
     ],
-    "Wrath": [
-      "Increased Area of Effect Support",
-      "Concentrated Effect Support"
-    ],
-    "Zealotry": [
-      "Increased Area of Effect Support",
-      "Concentrated Effect Support"
-    ]
+    "Wrath": ["Increased Area of Effect Support", "Concentrated Effect Support"],
+    "Zealotry": ["Increased Area of Effect Support", "Concentrated Effect Support"]
   }
 }

@@ -1,5 +1,5 @@
-import { GEM_COLORS } from '@/types';
 import type { GemColor } from '@/types';
+import { GEM_COLORS } from '@/types';
 
 interface ColorFilterProps {
   activeColor: GemColor | 'all';
@@ -25,12 +25,11 @@ export function ColorFilter({ activeColor, onColorChange }: ColorFilterProps) {
     <div className="flex gap-2">
       {FILTERS.map((f) => (
         <button
+          type="button"
           key={f.value}
           onClick={() => onColorChange(f.value)}
           className={`px-3 py-1 rounded-full text-sm font-medium transition-colors ${
-            activeColor !== f.value
-              ? 'text-muted-foreground hover:text-foreground'
-              : ''
+            activeColor !== f.value ? 'text-muted-foreground hover:text-foreground' : ''
           }`}
           style={activeColor === f.value ? ACTIVE_STYLES[f.value] : undefined}
         >

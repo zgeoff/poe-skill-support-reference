@@ -1,6 +1,6 @@
-import { useState, useEffect } from 'react';
-import type { SkillGem } from '@/types';
+import { useEffect, useState } from 'react';
 import { loadGemData } from '@/lib/data';
+import type { SkillGem } from '@/types';
 
 interface UseGemDataReturn {
   skills: SkillGem[];

@@ -19,6 +19,7 @@ export function SearchBar({ query, onQueryChange }: SearchBarProps) {
       />
       {query && (
         <button
+          type="button"
           onClick={() => onQueryChange('')}
           className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground"
           aria-label="Clear search"

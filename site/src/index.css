@@ -31,43 +31,43 @@
 }
 
 :root {
-    --radius: 0.625rem;
-    /* Dark-only app — define spec colors directly */
-    --background: #0a0a0f;
-    --foreground: #c8c4b8;
-    --card: #12121a;
-    --card-foreground: #c8c4b8;
-    --primary: #e8e4d8;
-    --primary-foreground: #0a0a0f;
-    --secondary: #12121a;
-    --secondary-foreground: #c8c4b8;
-    --muted: #1a1a2a;
-    --muted-foreground: #6b6a63;
-    --accent: #8b7a2e;
-    --accent-foreground: #e8e4d8;
-    --destructive: #c24b38;
-    --border: #1e1e2e;
-    --input: #1e1e2e;
-    --ring: #8b7a2e;
+  --radius: 0.625rem;
+  /* Dark-only app — define spec colors directly */
+  --background: #0a0a0f;
+  --foreground: #c8c4b8;
+  --card: #12121a;
+  --card-foreground: #c8c4b8;
+  --primary: #e8e4d8;
+  --primary-foreground: #0a0a0f;
+  --secondary: #12121a;
+  --secondary-foreground: #c8c4b8;
+  --muted: #1a1a2a;
+  --muted-foreground: #6b6a63;
+  --accent: #8b7a2e;
+  --accent-foreground: #e8e4d8;
+  --destructive: #c24b38;
+  --border: #1e1e2e;
+  --input: #1e1e2e;
+  --ring: #8b7a2e;
 }
 
 /* Gem-color pill classes for SupportPills */
 .gem-pill-red {
-    background-color: #2a1510 !important;
-    color: #c24b38 !important;
-    border-color: transparent !important;
+  background-color: #2a1510;
+  color: #c24b38;
+  border-color: transparent;
 }
 
 .gem-pill-green {
-    background-color: #0f2212 !important;
-    color: #3b9b47 !important;
-    border-color: transparent !important;
+  background-color: #0f2212;
+  color: #3b9b47;
+  border-color: transparent;
 }
 
 .gem-pill-blue {
-    background-color: #101828 !important;
-    color: #4169c9 !important;
-    border-color: transparent !important;
+  background-color: #101828;
+  color: #4169c9;
+  border-color: transparent;
 }
 
 @layer base {
@@ -76,8 +76,8 @@
   }
   * {
     @apply border-border outline-ring/50;
-    }
+  }
   body {
     @apply bg-background text-foreground;
-    }
+  }
 }
