@@ -7,6 +7,12 @@ Writes: data/poe_skill_support_compatibility.json
 
 Computes support gem compatibility using allowed_types / excluded_types
 matching from RePoE-extracted game data.
+
+Known limitation: Trigger supports (e.g. Cast On Critical Strike, Cast on Melee Kill)
+have ignore_minion_types=true and are excluded from minion skills. In-game, these
+supports don't directly modify the minion skill — they link two skills via a trigger
+condition (e.g. "cast spell X when minion crits"). This is a fundamentally different
+mechanic that our compatibility model doesn't represent, so we intentionally omit them.
 """
 
 import json
@@ -99,7 +105,8 @@ def evaluate_rpn(expression, skill_types):
     return any(stack)
 
 
-def is_compatible(support_gem_data, active_skill_types):
+def is_compatible(support_gem_data, active_skill_types, minion_types=None,
+                   is_trigger=False):
     """
     Determine if a support gem is compatible with an active skill based on
     its allowed_types and excluded_types.
@@ -107,20 +114,37 @@ def is_compatible(support_gem_data, active_skill_types):
     - If allowed_types is empty/None: supports everything (subject to exclusions).
     - If allowed_types is non-empty: evaluate the RPN expression; must be True.
     - If excluded_types is non-empty: evaluate the RPN expression; must be False.
+
+    For minion skills, allowed_types is checked against both the skill's own
+    types and its minion_types (combined), since supports like Multistrike
+    can apply to the minions' attacks. Excluded_types is checked against the
+    combined set as well.
+
+    Trigger supports (is_trigger=True) are exempt from ignore_minion_types
+    since they link skills via a trigger condition rather than directly
+    modifying the skill.
     """
     sg = support_gem_data
 
     allowed = sg.get("allowed_types") or []
     excluded = sg.get("excluded_types") or []
 
-    # Check allowed types
+    # If the support has ignore_minion_types (and isn't a trigger), only check
+    # the skill's own types. Otherwise, combine with minion types for matching.
+    ignore_minion = sg.get("ignore_minion_types", False) and not is_trigger
+    if ignore_minion or not minion_types:
+        combined_types = list(active_skill_types)
+    else:
+        combined_types = list(set(active_skill_types) | set(minion_types))
+
+    # Check allowed types against combined types
     if allowed:
-        if not evaluate_rpn(allowed, active_skill_types):
+        if not evaluate_rpn(allowed, combined_types):
             return False
 
-    # Check excluded types
+    # Check excluded types against combined types
     if excluded:
-        if evaluate_rpn(excluded, active_skill_types):
+        if evaluate_rpn(excluded, combined_types):
             return False
 
     return True
@@ -164,11 +188,16 @@ def main():
             support_gem_data = gem.get("support_gem")
             if not support_gem_data:
                 continue
+            # Trigger supports link two skills via a condition (e.g. "cast X when Y crits")
+            # rather than directly modifying a skill, so they're exempt from
+            # ignore_minion_types filtering.
+            is_trigger = bool(re.match(r"^(Awakened )?Cast (on |On |when |while )", display_name))
             support_gems.append({
                 "id": gem_id,
                 "name": display_name,
                 "color": COLOR_MAP[color_code],
                 "data": support_gem_data,
+                "is_trigger": is_trigger,
             })
         else:
             active_skill = gem.get("active_skill")
@@ -186,6 +215,7 @@ def main():
                 "name": skill_name,
                 "color": COLOR_MAP[color_code],
                 "types": types,
+                "minion_types": active_skill.get("minion_types", []),
             })
 
     # Deduplicate gems by (color, display_name), preferring the "base" gem ID
@@ -223,7 +253,9 @@ def main():
         compatible_supports = []
 
         for support in support_gems:
-            if is_compatible(support["data"], active["types"]):
+            if is_compatible(support["data"], active["types"],
+                             active.get("minion_types"),
+                             is_trigger=support.get("is_trigger", False)):
                 compatible_supports.append({
                     "name": support["name"],
                     "color": support["color"],
