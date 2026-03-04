@@ -1,1 +1,13 @@
 .claude/settings.local.json
+
+# Build output
+docs/
+
+# Dependencies
+site/node_modules/
+
+# Logs
+*.log
+
+# OS
+.DS_Store

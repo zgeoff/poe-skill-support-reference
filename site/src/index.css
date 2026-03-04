@@ -1,0 +1,147 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+@import "shadcn/tailwind.css";
+
+@custom-variant dark (&:is(.dark *));
+
+@theme inline {
+    --radius-sm: calc(var(--radius) - 4px);
+    --radius-md: calc(var(--radius) - 2px);
+    --radius-lg: var(--radius);
+    --radius-xl: calc(var(--radius) + 4px);
+    --radius-2xl: calc(var(--radius) + 8px);
+    --radius-3xl: calc(var(--radius) + 12px);
+    --radius-4xl: calc(var(--radius) + 16px);
+    --color-background: var(--background);
+    --color-foreground: var(--foreground);
+    --color-card: var(--card);
+    --color-card-foreground: var(--card-foreground);
+    --color-popover: var(--popover);
+    --color-popover-foreground: var(--popover-foreground);
+    --color-primary: var(--primary);
+    --color-primary-foreground: var(--primary-foreground);
+    --color-secondary: var(--secondary);
+    --color-secondary-foreground: var(--secondary-foreground);
+    --color-muted: var(--muted);
+    --color-muted-foreground: var(--muted-foreground);
+    --color-accent: var(--accent);
+    --color-accent-foreground: var(--accent-foreground);
+    --color-destructive: var(--destructive);
+    --color-border: var(--border);
+    --color-input: var(--input);
+    --color-ring: var(--ring);
+    --color-chart-1: var(--chart-1);
+    --color-chart-2: var(--chart-2);
+    --color-chart-3: var(--chart-3);
+    --color-chart-4: var(--chart-4);
+    --color-chart-5: var(--chart-5);
+    --color-sidebar: var(--sidebar);
+    --color-sidebar-foreground: var(--sidebar-foreground);
+    --color-sidebar-primary: var(--sidebar-primary);
+    --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+    --color-sidebar-accent: var(--sidebar-accent);
+    --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+    --color-sidebar-border: var(--sidebar-border);
+    --color-sidebar-ring: var(--sidebar-ring);
+}
+
+:root {
+    --radius: 0.625rem;
+    /* Dark-only app — define spec colors directly */
+    --background: #0a0a0f;
+    --foreground: #c8c4b8;
+    --card: #12121a;
+    --card-foreground: #c8c4b8;
+    --popover: #12121a;
+    --popover-foreground: #c8c4b8;
+    --primary: #e8e4d8;
+    --primary-foreground: #0a0a0f;
+    --secondary: #12121a;
+    --secondary-foreground: #c8c4b8;
+    --muted: #1a1a2a;
+    --muted-foreground: #6b6a63;
+    --accent: #8b7a2e;
+    --accent-foreground: #e8e4d8;
+    --destructive: #c24b38;
+    --border: #1e1e2e;
+    --input: #1e1e2e;
+    --ring: #8b7a2e;
+    --chart-1: #c24b38;
+    --chart-2: #3b9b47;
+    --chart-3: #4169c9;
+    --chart-4: #8b7a2e;
+    --chart-5: #6b6a63;
+    --sidebar: #12121a;
+    --sidebar-foreground: #c8c4b8;
+    --sidebar-primary: #8b7a2e;
+    --sidebar-primary-foreground: #e8e4d8;
+    --sidebar-accent: #1a1a2a;
+    --sidebar-accent-foreground: #c8c4b8;
+    --sidebar-border: #1e1e2e;
+    --sidebar-ring: #8b7a2e;
+}
+
+.dark {
+    --background: #0a0a0f;
+    --foreground: #c8c4b8;
+    --card: #12121a;
+    --card-foreground: #c8c4b8;
+    --popover: #12121a;
+    --popover-foreground: #c8c4b8;
+    --primary: #e8e4d8;
+    --primary-foreground: #0a0a0f;
+    --secondary: #12121a;
+    --secondary-foreground: #c8c4b8;
+    --muted: #1a1a2a;
+    --muted-foreground: #6b6a63;
+    --accent: #8b7a2e;
+    --accent-foreground: #e8e4d8;
+    --destructive: #c24b38;
+    --border: #1e1e2e;
+    --input: #1e1e2e;
+    --ring: #8b7a2e;
+    --chart-1: #c24b38;
+    --chart-2: #3b9b47;
+    --chart-3: #4169c9;
+    --chart-4: #8b7a2e;
+    --chart-5: #6b6a63;
+    --sidebar: #12121a;
+    --sidebar-foreground: #c8c4b8;
+    --sidebar-primary: #8b7a2e;
+    --sidebar-primary-foreground: #e8e4d8;
+    --sidebar-accent: #1a1a2a;
+    --sidebar-accent-foreground: #c8c4b8;
+    --sidebar-border: #1e1e2e;
+    --sidebar-ring: #8b7a2e;
+}
+
+/* Gem-color pill classes for SupportPills */
+.gem-pill-red {
+    background-color: #2a1510 !important;
+    color: #c24b38 !important;
+    border-color: transparent !important;
+}
+
+.gem-pill-green {
+    background-color: #0f2212 !important;
+    color: #3b9b47 !important;
+    border-color: transparent !important;
+}
+
+.gem-pill-blue {
+    background-color: #101828 !important;
+    color: #4169c9 !important;
+    border-color: transparent !important;
+}
+
+@layer base {
+  html {
+    font-size: 14px;
+  }
+  * {
+    @apply border-border outline-ring/50;
+    }
+  body {
+    @apply bg-background text-foreground;
+    }
+}

@@ -1,0 +1,86 @@
+import { useGemData } from '@/hooks/useGemData';
+import { useSearch } from '@/hooks/useSearch';
+import { useHashState } from '@/hooks/useHashState';
+import { usePinnedSkills } from '@/hooks/usePinnedSkills';
+import { SearchBar } from '@/components/SearchBar';
+import { ColorFilter } from '@/components/ColorFilter';
+import { SkillList } from '@/components/SkillList';
+import { useEffect, useRef } from 'react';
+
+export default function App() {
+  const { skills, loading, error } = useGemData();
+  const { hashState, setQuery: setHashQuery, toggleExpanded, setColorFilter: setHashColor, isExpanded } = useHashState();
+  const { query, setQuery, colorFilter, setColorFilter, results } = useSearch(skills);
+  const { pinnedNames, isPinned, togglePin, unpin } = usePinnedSkills();
+  const syncedFromHash = useRef(false);
+
+  // Sync hash state to search state whenever hashState changes (supports back/forward)
+  useEffect(() => {
+    // On mount, always sync. After mount, sync when hash changes from popstate.
+    if (!syncedFromHash.current) {
+      if (hashState.query) setQuery(hashState.query);
+      if (hashState.colorFilter !== 'all') setColorFilter(hashState.colorFilter);
+      syncedFromHash.current = true;
+    } else {
+      setQuery(hashState.query);
+      setColorFilter(hashState.colorFilter);
+    }
+  }, [hashState.query, hashState.colorFilter]); // eslint-disable-line react-hooks/exhaustive-deps
+
+  const handleQueryChange = (q: string) => {
+    setQuery(q);
+    setHashQuery(q);
+  };
+
+  const handleColorChange = (c: typeof colorFilter) => {
+    setColorFilter(c);
+    setHashColor(c);
+  };
+
+  const pinnedSkills = skills.filter((s) => pinnedNames.has(s.name));
+
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-[#0a0a0f] flex items-center justify-center">
+        <p className="text-[#6b6a63]">Loading gem data...</p>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="min-h-screen bg-[#0a0a0f] flex items-center justify-center">
+        <p className="text-red-400">Error: {error}</p>
+      </div>
+    );
+  }
+
+  return (
+    <div className="min-h-screen bg-[#0a0a0f]">
+      <div className="max-w-2xl mx-auto px-4">
+        <header className="py-6">
+          <h1 className="text-2xl font-semibold text-[#e8e4d8]">Imbued</h1>
+          <p className="text-sm text-[#6b6a63] hidden sm:block">PoE2 Gem Compatibility Reference</p>
+        </header>
+        <div className="sticky top-0 z-10 bg-[#0a0a0f] pt-3 pb-3 space-y-3">
+          <SearchBar query={query} onQueryChange={handleQueryChange} />
+          <ColorFilter activeColor={colorFilter} onColorChange={handleColorChange} />
+        </div>
+        <main>
+          <SkillList
+            skills={results}
+            pinnedSkills={pinnedSkills}
+            isExpanded={isExpanded}
+            onToggleExpand={toggleExpanded}
+            isPinned={isPinned}
+            onTogglePin={togglePin}
+            onUnpin={unpin}
+          />
+        </main>
+        <footer className="py-6 text-center text-xs text-[#6b6a63]">
+          Data sourced from Path of Exile 2
+        </footer>
+      </div>
+    </div>
+  );
+}
