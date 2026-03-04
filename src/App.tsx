@@ -23,6 +23,9 @@ export default function App() {
     toggleExpanded,
     expandedCount,
     collapseAll,
+    searchSupports,
+    setSearchSupports,
+    matchedSupports,
   } = useSkillSearch(skills);
   const { pinnedNames, isPinned, togglePin, unpin } = usePinnedSkills();
 
@@ -73,7 +76,12 @@ export default function App() {
           </a>
         </header>
         <div className="sticky top-0 z-10 bg-[#0a0a0f] pt-3 pb-3 space-y-3">
-          <SearchBar query={query} onQueryChange={setQuery} />
+          <SearchBar
+            query={query}
+            onQueryChange={setQuery}
+            searchSupports={searchSupports}
+            onSearchSupportsChange={setSearchSupports}
+          />
           <div className="flex items-center justify-between gap-2">
             <div>
               <span className="text-xs text-muted-foreground mb-1 block">Filter</span>
@@ -106,6 +114,7 @@ export default function App() {
             onTogglePin={togglePin}
             onUnpin={unpin}
             colorFilter={colorFilter}
+            matchedSupports={matchedSupports}
           />
         </main>
       </div>

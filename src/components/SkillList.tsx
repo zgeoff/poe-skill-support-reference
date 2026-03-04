@@ -12,6 +12,7 @@ interface SkillListProps {
   onTogglePin: (name: string) => void;
   onUnpin: (name: string) => void;
   colorFilter: GemColor | 'all';
+  matchedSupports: Map<string, Record<GemColor, string[]>> | null;
 }
 
 export function SkillList({
@@ -23,6 +24,7 @@ export function SkillList({
   onTogglePin,
   onUnpin,
   colorFilter,
+  matchedSupports,
 }: SkillListProps) {
   const filteredSkills = useMemo(() => skills.filter((s) => !isPinned(s.name)), [skills, isPinned]);
   const hasAnyResults = filteredSkills.length > 0 || pinnedSkills.length > 0;
@@ -57,6 +59,7 @@ export function SkillList({
             isPinned={isPinned(skill.name)}
             onTogglePin={onTogglePin}
             colorFilter={colorFilter}
+            matchedSupports={matchedSupports?.get(skill.name)}
           />
         ))
       )}

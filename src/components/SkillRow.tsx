@@ -11,6 +11,7 @@ interface SkillRowProps {
   isPinned: boolean;
   onTogglePin: (name: string) => void;
   colorFilter: GemColor | 'all';
+  matchedSupports?: Record<GemColor, string[]> | null;
 }
 
 export const SkillRow = memo(function SkillRow({
@@ -20,24 +21,27 @@ export const SkillRow = memo(function SkillRow({
   isPinned,
   onTogglePin,
   colorFilter,
+  matchedSupports,
 }: SkillRowProps) {
+  const forcedOpen = !!matchedSupports;
+  const effectiveExpanded = forcedOpen || isExpanded;
   const contentRef = useRef<HTMLDivElement>(null);
-  const wasExpandedRef = useRef(isExpanded);
+  const wasExpandedRef = useRef(effectiveExpanded);
 
   useEffect(() => {
     const wasExpanded = wasExpandedRef.current;
-    wasExpandedRef.current = isExpanded;
-    if (isExpanded && !wasExpanded && contentRef.current?.scrollIntoView) {
+    wasExpandedRef.current = effectiveExpanded;
+    if (effectiveExpanded && !wasExpanded && !forcedOpen && contentRef.current?.scrollIntoView) {
       const motionOk = !window.matchMedia('(prefers-reduced-motion: reduce)').matches;
       contentRef.current.scrollIntoView({
         behavior: motionOk ? 'smooth' : 'auto',
         block: 'nearest',
       });
     }
-  }, [isExpanded]);
+  }, [effectiveExpanded, forcedOpen]);
 
   return (
-    <Collapsible open={isExpanded} onOpenChange={() => onToggleExpand(skill.name)}>
+    <Collapsible open={effectiveExpanded} onOpenChange={() => onToggleExpand(skill.name)}>
       <div
         className="skill-row relative border-l-4"
         style={{ borderLeftColor: GEM_COLORS[skill.color] }}
@@ -49,15 +53,17 @@ export const SkillRow = memo(function SkillRow({
               className="flex-1 flex items-center justify-between py-3 sm:py-2.5 px-4 hover:bg-[#1a1a2a] transition-colors text-left min-w-0 focus-visible:ring-2 focus-visible:ring-ring"
             >
               <div className="flex items-center gap-2 min-w-0">
-                <svg
-                  aria-hidden="true"
-                  className="text-muted-foreground w-4 h-4 shrink-0 transition-transform"
-                  style={{ transform: isExpanded ? 'rotate(90deg)' : undefined }}
-                  viewBox="0 0 24 24"
-                  fill="currentColor"
-                >
-                  <path d="M8.59 16.59L13.17 12 8.59 7.41 10 6l6 6-6 6z" />
-                </svg>
+                {!forcedOpen && (
+                  <svg
+                    aria-hidden="true"
+                    className="text-muted-foreground w-4 h-4 shrink-0 transition-transform"
+                    style={{ transform: effectiveExpanded ? 'rotate(90deg)' : undefined }}
+                    viewBox="0 0 24 24"
+                    fill="currentColor"
+                  >
+                    <path d="M8.59 16.59L13.17 12 8.59 7.41 10 6l6 6-6 6z" />
+                  </svg>
+                )}
                 <span className="text-[#c8c4b8] font-medium truncate">{skill.name}</span>
               </div>
               <div className="flex items-center gap-2 shrink-0">
@@ -110,7 +116,7 @@ export const SkillRow = memo(function SkillRow({
         </div>
         <CollapsibleContent>
           <div ref={contentRef} className="px-4 pt-2 pb-3">
-            <SupportPills supports={skill.supports} colorFilter={colorFilter} />
+            <SupportPills supports={matchedSupports ?? skill.supports} colorFilter={colorFilter} />
           </div>
         </CollapsibleContent>
       </div>
