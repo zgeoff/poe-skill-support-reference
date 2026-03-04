@@ -2,17 +2,22 @@
 """
 Build skill-to-support compatibility data from RePoE gems.min.json.
 
+Game version: 3.27.0e (Phrecia league)
 Reads: data/repoe_output/gems.min.json
 Writes: data/poe_skill_support_compatibility.json
 
 Computes support gem compatibility using allowed_types / excluded_types
 matching from RePoE-extracted game data.
 
+RePoE modification: We added extraction of the IgnoreMinionTypes boolean from
+GrantedEffects.dat (via gems.py _convert_support_gem_specific and the Pydantic
+models in model/gems.py and model/gems_minimal.py). This flag prevents supports
+from matching minion skills via their minion types when the support can't actually
+modify minion skills.
+
 Known limitation: Trigger supports (e.g. Cast On Critical Strike, Cast on Melee Kill)
-have ignore_minion_types=true and are excluded from minion skills. In-game, these
-supports don't directly modify the minion skill — they link two skills via a trigger
-condition (e.g. "cast spell X when minion crits"). This is a fundamentally different
-mechanic that our compatibility model doesn't represent, so we intentionally omit them.
+have ignore_minion_types=true but are exempted from that check here, since they link
+two skills via a trigger condition rather than directly modifying the skill.
 """
 
 import json
@@ -33,9 +38,6 @@ EXCLUDED_GEM_IDS = {
     "OilArrow",            # Legacy gem (Flammable Shot), removed from drop tables
     "SupportDivineBlessing",  # Removed from game
     "SupportEarthbreaker",    # Item-granted, not a droppable gem
-    "SupportEmpower",         # Not applicable (boosts gem level, not a skill modifier)
-    "SupportEnhance",         # Not applicable (boosts gem quality, not a skill modifier)
-    "SupportEnlighten",       # Not applicable (reduces mana reservation, not a skill modifier)
 }
 
 # Gems incorrectly marked as unreleased in game data but exist in-game.
@@ -57,6 +59,8 @@ def is_excluded_gem(gem_id, display_name, tags):
     if display_name.startswith("[DNT]") or display_name.startswith("[UNUSED]"):
         return True
     if "Playtest" in display_name:
+        return True
+    if "exceptional" in tags:
         return True
     return False
 
