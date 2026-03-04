@@ -1,3 +1,4 @@
+import { Github } from 'lucide-react';
 import { useMemo } from 'react';
 import { ColorFilter } from '@/components/ColorFilter';
 import { SearchBar } from '@/components/SearchBar';
@@ -64,8 +65,16 @@ export default function App() {
             onUnpin={unpin}
           />
         </main>
-        <footer className="py-6 text-center text-xs text-[#6b6a63]">
-          Data sourced from Path of Exile
+        <footer className="py-6 text-center text-[#6b6a63]">
+          <a
+            href="https://github.com/zgeoff/poe-imbued-gem-reference"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center hover:text-[#a38d6d] transition-colors"
+            aria-label="GitHub repository"
+          >
+            <Github size={20} />
+          </a>
         </footer>
       </div>
     </div>
