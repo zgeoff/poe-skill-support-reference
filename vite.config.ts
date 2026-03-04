@@ -8,7 +8,7 @@ export default defineConfig({
   server: {
     allowedHosts: ['.ts.net'],
   },
-  base: '/poe-imbued-gems/',
+  base: '/poe-imbued-gem-reference/',
   build: {
     outDir: 'docs',
     emptyOutDir: true,
