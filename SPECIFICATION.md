@@ -54,15 +54,16 @@ imbued/
 │   │   ├── hooks/
 │   │   │   ├── useGemData.ts                  # Data fetching + state
 │   │   │   ├── useSearch.ts                   # Search state + debounced query
-│   │   │   └── useHashState.ts                # URL hash sync
-│   │   └── components/
-│   │       ├── ui/                            # shadcn/ui components (input, badge, etc.)
-│   │       ├── SearchBar.tsx
-│   │       ├── ColorFilter.tsx
-│   │       ├── SkillList.tsx
-│   │       ├── SkillRow.tsx
-│   │       └── SupportPills.tsx
-│   ├── src/
+│   │   │   ├── useHashState.ts                # URL hash sync
+│   │   │   └── usePinnedSkills.ts             # Pinned skills state + localStorage
+│   │   ├── components/
+│   │   │   ├── ui/                            # shadcn/ui components (input, badge, etc.)
+│   │   │   ├── SearchBar.tsx
+│   │   │   ├── ColorFilter.tsx
+│   │   │   ├── PinnedSection.tsx              # Collapsible pinned skills section
+│   │   │   ├── SkillList.tsx
+│   │   │   ├── SkillRow.tsx
+│   │   │   └── SupportPills.tsx
 │   │   └── test/
 │   │       ├── setup.ts                       # Test setup (jsdom, RTL matchers)
 │   │       ├── fixtures.ts                    # Small subset of real gem data for tests
@@ -114,13 +115,23 @@ Single-column, mobile-first. Max width ~640px centered.
 │  🔍 Search skills or supports… │  ← Sticky search bar
 │  [All] [Red] [Green] [Blue]     │  ← Color filter pills
 ├─────────────────────────────────┤
+│  ▾ Pinned (2)                   │  ← Collapsible pinned section header
+│  ┌─────────────────────────────┐│
+│  │ 📌 Arc               [37] 🔵││  ← Pinned skills (always visible,
+│  │ 📌 Cyclone            [22] 🟢││    not affected by search/filter)
+│  └─────────────────────────────┘│
+├─────────────────────────────────┤
 │  ▸ Cleave              [14]  🔴 │  ← Skill row (name, support count, color dot)
-│  ▸ Cyclone             [22]  🟢 │
-│  ▾ Arc                 [37]  🔵 │  ← Expanded
+│  ▾ Arc                 [37]  🔵 │  ← Expanded (multiple can be open)
 │  ┌─────────────────────────────┐│
 │  │ Added Lightning · Spell Echo││  ← Support pills (flex-wrap)
 │  │ Faster Casting · Inspiration││
 │  │ Controlled Destr. · ...     ││
+│  └─────────────────────────────┘│
+│  ▾ Cyclone             [22]  🟢 │  ← Also expanded (multi-expand)
+│  ┌─────────────────────────────┐│
+│  │ Multistrike · Melee Phys   ││
+│  │ ...                         ││
 │  └─────────────────────────────┘│
 │  ▸ Ball Lightning      [35]  🔵 │
 │  ...                            │
@@ -143,15 +154,27 @@ Single-column, mobile-first. Max width ~640px centered.
 - "All" uses gold accent
 - Uses shadcn `Toggle` or custom pill buttons
 
+### `<PinnedSection />`
+- Collapsible section at the top of the skill list
+- Header shows "Pinned (N)" with toggle to collapse/expand the section
+- Pinned skills are always visible regardless of search query or color filter
+- Each pinned skill row has an unpin button
+- Section is only rendered when there are pinned skills
+- Collapsed state persisted in localStorage
+
 ### `<SkillList />`
 - Virtualized list (only if performance requires it — start without)
+- Renders `<PinnedSection />` above filtered results
+- Pinned skills are excluded from the main list to avoid duplicates
 - Maps filtered results to `<SkillRow />` components
 - Shows "No matching skills found" empty state with suggestion text
 
 ### `<SkillRow />`
 - Clickable row, expands/collapses on click
+- Multiple skills can be expanded simultaneously (not accordion-style)
 - Left border in gem color (4px)
-- Content: skill name, support count badge, color indicator
+- Content: skill name, support count badge, color indicator, pin/unpin button
+- Pin button: toggles pinned state, visually distinct when pinned
 - Expand animation: height transition via CSS or Radix Collapsible
 - Uses shadcn `Collapsible` component
 
@@ -161,6 +184,21 @@ Single-column, mobile-first. Max width ~640px centered.
 - Each pill uses dim gem-color background + bright gem-color text
 - " Support" suffix stripped from names for brevity
 - Uses shadcn `Badge` component
+
+## Pinning Behavior
+
+**`usePinnedSkills` hook:**
+- Stores pinned skill names in `localStorage` under key `imbued-pinned`
+- Provides `pin(name)`, `unpin(name)`, `togglePin(name)`, `isPinned(name)` methods
+- No pin limit — users can pin as many as they want
+- Pinned section is collapsible to mitigate clutter (collapsed state in localStorage)
+
+**Behavior:**
+- Pinned skills render in a dedicated `<PinnedSection />` at the top of the list
+- Pinned skills are not affected by search queries or color filters — they always appear
+- Pinned skills are excluded from the main search results list to prevent duplicates
+- Pinned skills can be independently expanded/collapsed just like regular skills
+- Pin/unpin via a small pin icon button on each `<SkillRow />`
 
 ## Search Behavior
 
@@ -197,13 +235,18 @@ interface SearchableSkill {
 
 ## URL Hash State
 
-**Format:** `#?q=<query>&e=<expanded>&c=<color>`
+**Format:** `#?q=<query>&e=<expanded1>&e=<expanded2>&c=<color>`
 
 **Examples:**
 - `#?q=cleave` — searching for "cleave"
 - `#?q=cleave&e=Cleave` — searching with Cleave expanded
+- `#?e=Arc&e=Cyclone` — multiple skills expanded
 - `#?c=blue` — filtered to blue gems
 - `#?q=multistrike&e=Cyclone&c=green` — full state
+
+**Notes:**
+- Multiple `e` params supported for multi-expand
+- Pinned skills are stored in localStorage, not the URL hash (pins are persistent across sessions)
 
 **Implementation:**
 - `useHashState` hook syncs state ↔ URL hash
@@ -246,6 +289,7 @@ Focus on integration tests that exercise real user behavior through the rendered
 - Import `@testing-library/jest-dom/vitest` for DOM matchers (`toBeInTheDocument`, etc.)
 - Mock `fetch` to return test fixture data
 - Reset URL hash between tests
+- Clear localStorage between tests (pinned state)
 
 **Test fixtures (`src/test/fixtures.ts`):**
 - Small representative subset of real data (~10 skills across all 3 colors, ~15 supports)
@@ -258,9 +302,13 @@ Focus on integration tests that exercise real user behavior through the rendered
 - User sees all skills listed alphabetically on initial load
 - User clicks a skill row → support pills appear
 - User clicks the same row again → pills collapse
-- Only one skill expanded at a time (clicking another collapses the first)
+- Multiple skills can be expanded simultaneously
 - Color filter: clicking "Red" shows only red skills, clicking "All" resets
 - Empty state: nonsense query shows "No matching skills found"
+- Pinning: user pins a skill → it appears in pinned section at top
+- Pinning: pinned skills persist through search/filter changes
+- Pinning: user can collapse/expand the pinned section
+- Pinning: unpinning removes skill from pinned section back to main list
 
 ### `search.test.tsx` — Search behavior
 - Typing a skill name filters the list to matching skills
@@ -309,8 +357,8 @@ bun run build          # Outputs to ../docs/
 
 **Vite config notes:**
 - `build.outDir: '../docs'`
-- `base: '/<repo-name>/'` (for GitHub Pages subdomain path, or `'/'` if custom domain)
-- Copy `data/poe_skill_support_compatibility.json` → `site/public/data.json` (via a prebuild script or vite plugin)
+- `base: '/poe-imbued-gems/'`
+- Prebuild script in `package.json` copies `data/poe_skill_support_compatibility.json` → `site/public/data.json`
 
 **GitHub Pages setup:**
 - Settings → Pages → Source: Deploy from branch
