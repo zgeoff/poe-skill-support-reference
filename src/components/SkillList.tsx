@@ -36,6 +36,9 @@ export function SkillList({
         onToggleExpand={onToggleExpand}
         onUnpin={onUnpin}
       />
+      {pinnedSkills.length > 0 && filteredSkills.length > 0 && (
+        <div className="border-t border-[#2a2a3a] my-2" />
+      )}
       {filteredSkills.length === 0 && !hasAnyResults ? (
         <div className="text-center py-8 text-muted-foreground">
           <p>No matching skills found</p>

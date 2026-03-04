@@ -41,9 +41,12 @@ export default function App() {
     <div className="min-h-screen bg-[#0a0a0f]">
       <div className="max-w-2xl mx-auto px-4">
         <header className="py-6">
-          <h1 className="text-2xl font-semibold text-[#e8e4d8] text-balance">Imbued</h1>
-          <p className="sr-only sm:not-sr-only sm:text-sm sm:text-[#6b6a63]">
-            PoE2 Gem Compatibility Reference
+          <h1 className="text-2xl font-semibold text-[#e8e4d8] text-balance">
+            Imbued Gem Reference
+          </h1>
+          <p className="text-sm text-[#6b6a63]">
+            Below is a list of skill gems and their possible imbuement outcomes. No guarantees on
+            accuracy of the data.
           </p>
         </header>
         <div className="sticky top-0 z-10 bg-[#0a0a0f] pt-3 pb-3 space-y-3">
@@ -62,7 +65,7 @@ export default function App() {
           />
         </main>
         <footer className="py-6 text-center text-xs text-[#6b6a63]">
-          Data sourced from Path of Exile 2
+          Data sourced from Path of Exile
         </footer>
       </div>
     </div>

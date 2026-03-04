@@ -8,9 +8,9 @@ interface ColorFilterProps {
 
 const FILTERS: { label: string; value: GemColor | 'all' }[] = [
   { label: 'All', value: 'all' },
-  { label: 'Red', value: 'red' },
-  { label: 'Green', value: 'green' },
-  { label: 'Blue', value: 'blue' },
+  { label: 'Str', value: 'red' },
+  { label: 'Dex', value: 'green' },
+  { label: 'Int', value: 'blue' },
 ];
 
 const ACTIVE_STYLES: Record<string, { backgroundColor: string; color: string }> = {
