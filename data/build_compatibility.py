@@ -110,7 +110,7 @@ def evaluate_rpn(expression, skill_types):
 
 
 def is_compatible(support_gem_data, active_skill_types, minion_types=None,
-                   is_trigger=False):
+                   is_trigger=False, disable_skill_if=None):
     """
     Determine if a support gem is compatible with an active skill based on
     its allowed_types and excluded_types.
@@ -127,8 +127,21 @@ def is_compatible(support_gem_data, active_skill_types, minion_types=None,
     Trigger supports (is_trigger=True) are exempt from ignore_minion_types
     since they link skills via a trigger condition rather than directly
     modifying the skill.
+
+    disable_skill_if is a dict of stat-based restrictions from static.stats,
+    e.g. {"melee_attack": True} from "disable_skill_if_melee_attack". These
+    are checked against the skill's types before type-expression matching.
     """
     sg = support_gem_data
+
+    # Check stat-based disable conditions before type matching.
+    # Some supports encode restrictions as stats rather than excluded_types.
+    # Currently only "disable_skill_if_melee_attack" causes false positives;
+    # "disable_skill_if_weapon_not_bow" is redundant because Mirage Archer
+    # already uses MirageArcherCanUse in allowed_types.
+    if disable_skill_if:
+        if disable_skill_if.get("melee_attack") and "Melee" in active_skill_types:
+            return False
 
     allowed = sg.get("allowed_types") or []
     excluded = sg.get("excluded_types") or []
@@ -196,12 +209,23 @@ def main():
             # rather than directly modifying a skill, so they're exempt from
             # ignore_minion_types filtering.
             is_trigger = bool(re.match(r"^(Awakened )?Cast (on |On |when |while )", display_name))
+            # Extract disable_skill_if_* stats from static.stats
+            disable_skill_if = {}
+            static_stats = gem.get("static", {}).get("stats") or []
+            for stat in static_stats:
+                if not stat:
+                    continue
+                stat_id = stat.get("id") or ""
+                if stat_id.startswith("disable_skill_if_"):
+                    key = stat_id.replace("disable_skill_if_", "")
+                    disable_skill_if[key] = True
             support_gems.append({
                 "id": gem_id,
                 "name": display_name,
                 "color": COLOR_MAP[color_code],
                 "data": support_gem_data,
                 "is_trigger": is_trigger,
+                "disable_skill_if": disable_skill_if,
             })
         else:
             active_skill = gem.get("active_skill")
@@ -259,7 +283,8 @@ def main():
         for support in support_gems:
             if is_compatible(support["data"], active["types"],
                              active.get("minion_types"),
-                             is_trigger=support.get("is_trigger", False)):
+                             is_trigger=support.get("is_trigger", False),
+                             disable_skill_if=support.get("disable_skill_if")):
                 compatible_supports.append({
                     "name": support["name"],
                     "color": support["color"],
