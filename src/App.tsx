@@ -81,7 +81,7 @@ export default function App() {
             searchSupports={searchSupports}
             onSearchSupportsChange={setSearchSupports}
           />
-          <div className="flex items-center justify-between">
+          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
             <ColorFilter activeColor={colorFilter} onColorChange={setColorFilter} />
             <div className="flex gap-2 items-center">
               <button
