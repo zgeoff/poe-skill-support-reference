@@ -17,7 +17,7 @@ export function SearchBar({ query, onQueryChange }: SearchBarProps) {
         onChange={(e) => onQueryChange(e.target.value)}
         className="h-12 sm:h-11 pl-9 bg-[#12121a] border-[#1e1e2e]"
       />
-      {query && (
+      {query ? (
         <button
           type="button"
           onClick={() => onQueryChange('')}
@@ -26,7 +26,7 @@ export function SearchBar({ query, onQueryChange }: SearchBarProps) {
         >
           <X className="w-4 h-4" />
         </button>
-      )}
+      ) : null}
     </div>
   );
 }

@@ -1,3 +1,4 @@
+import { useMemo } from 'react';
 import { ColorFilter } from '@/components/ColorFilter';
 import { SearchBar } from '@/components/SearchBar';
 import { SkillList } from '@/components/SkillList';
@@ -11,7 +12,10 @@ export default function App() {
     useSkillSearch(skills);
   const { pinnedNames, isPinned, togglePin, unpin } = usePinnedSkills();
 
-  const pinnedSkills = skills.filter((s) => pinnedNames.has(s.name));
+  const pinnedSkills = useMemo(
+    () => skills.filter((s) => pinnedNames.has(s.name)),
+    [skills, pinnedNames],
+  );
 
   if (loading) {
     return (

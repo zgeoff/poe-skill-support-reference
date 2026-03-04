@@ -1,3 +1,4 @@
+import { useMemo } from 'react';
 import { PinnedSection } from '@/components/PinnedSection';
 import { SkillRow } from '@/components/SkillRow';
 import type { SkillGem } from '@/types';
@@ -21,7 +22,7 @@ export function SkillList({
   onTogglePin,
   onUnpin,
 }: SkillListProps) {
-  const filteredSkills = skills.filter((s) => !isPinned(s.name));
+  const filteredSkills = useMemo(() => skills.filter((s) => !isPinned(s.name)), [skills, isPinned]);
   const hasAnyResults = filteredSkills.length > 0 || pinnedSkills.length > 0;
 
   return (
@@ -43,9 +44,9 @@ export function SkillList({
             key={skill.name}
             skill={skill}
             isExpanded={isExpanded(skill.name)}
-            onToggleExpand={() => onToggleExpand(skill.name)}
+            onToggleExpand={onToggleExpand}
             isPinned={isPinned(skill.name)}
-            onTogglePin={() => onTogglePin(skill.name)}
+            onTogglePin={onTogglePin}
           />
         ))
       )}

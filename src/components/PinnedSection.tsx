@@ -45,9 +45,9 @@ export function PinnedSection({
             key={skill.name}
             skill={skill}
             isExpanded={isExpanded(skill.name)}
-            onToggleExpand={() => onToggleExpand(skill.name)}
+            onToggleExpand={onToggleExpand}
             isPinned={true}
-            onTogglePin={() => onUnpin(skill.name)}
+            onTogglePin={onUnpin}
           />
         ))}
       </CollapsibleContent>

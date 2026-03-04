@@ -1,7 +1,9 @@
-import Fuse from 'fuse.js';
+import type Fuse from 'fuse.js';
 import type { SearchableSkill, SkillGem } from '@/types';
 
-export function buildSearchIndex(skills: SkillGem[]): Fuse<SearchableSkill> {
+export async function buildSearchIndex(skills: SkillGem[]): Promise<Fuse<SearchableSkill>> {
+  const { default: Fuse } = await import('fuse.js');
+
   const searchableSkills: SearchableSkill[] = skills.map((s) => ({
     name: s.name,
     color: s.color,

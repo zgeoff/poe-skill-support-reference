@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { startTransition, useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { buildSearchIndex } from '@/lib/search';
 import type { GemColor, SkillGem } from '@/types';
 
@@ -100,7 +100,7 @@ export function useSkillSearch(skills: SkillGem[]): UseSkillSearchReturn {
     (q: string) => {
       setQueryRaw(q);
       if (debounceRef.current) clearTimeout(debounceRef.current);
-      debounceRef.current = setTimeout(() => setDebouncedQuery(q), 150);
+      debounceRef.current = setTimeout(() => startTransition(() => setDebouncedQuery(q)), 150);
 
       // replaceState for query changes (they're frequent)
       const state: HashState = {
@@ -149,19 +149,31 @@ export function useSkillSearch(skills: SkillGem[]): UseSkillSearchReturn {
 
   const isExpanded = useCallback((name: string) => expanded.has(name), [expanded]);
 
-  // Fuse.js search
-  const fuse = useMemo(() => buildSearchIndex(skills), [skills]);
+  // Fuse.js search — lazy-loaded
+  const [fuse, setFuse] = useState<Awaited<ReturnType<typeof buildSearchIndex>> | null>(null);
+  const fuseSkillsRef = useRef(skills);
+  useEffect(() => {
+    fuseSkillsRef.current = skills;
+    let cancelled = false;
+    buildSearchIndex(skills).then((index) => {
+      if (!cancelled && fuseSkillsRef.current === skills) {
+        setFuse(index);
+      }
+    });
+    return () => {
+      cancelled = true;
+    };
+  }, [skills]);
 
   const results = useMemo(() => {
     let filtered: SkillGem[];
 
-    if (debouncedQuery.trim()) {
+    if (debouncedQuery.trim() && fuse) {
       const fuseResults = fuse.search(debouncedQuery);
-      const matchedNames = new Set(fuseResults.map((r) => r.item.name));
-      filtered = skills.filter((s) => matchedNames.has(s.name));
-      // O(n log n) sort using a Map instead of O(n*m) findIndex
-      const order = new Map(fuseResults.map((r, i) => [r.item.name, i]));
-      filtered.sort((a, b) => (order.get(a.name) ?? 0) - (order.get(b.name) ?? 0));
+      const skillMap = new Map(skills.map((s) => [s.name, s]));
+      filtered = fuseResults
+        .map((r) => skillMap.get(r.item.name))
+        .filter((s): s is SkillGem => s !== undefined);
     } else {
       filtered = [...skills];
     }

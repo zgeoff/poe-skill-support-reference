@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react';
+import { memo, useEffect, useRef } from 'react';
 import { SupportPills } from '@/components/SupportPills';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
 import type { SkillGem } from '@/types';
@@ -7,12 +7,12 @@ import { GEM_COLORS } from '@/types';
 interface SkillRowProps {
   skill: SkillGem;
   isExpanded: boolean;
-  onToggleExpand: () => void;
+  onToggleExpand: (name: string) => void;
   isPinned: boolean;
-  onTogglePin: () => void;
+  onTogglePin: (name: string) => void;
 }
 
-export function SkillRow({
+export const SkillRow = memo(function SkillRow({
   skill,
   isExpanded,
   onToggleExpand,
@@ -28,8 +28,11 @@ export function SkillRow({
   }, [isExpanded]);
 
   return (
-    <Collapsible open={isExpanded} onOpenChange={onToggleExpand}>
-      <div className={`relative border-l-4`} style={{ borderLeftColor: GEM_COLORS[skill.color] }}>
+    <Collapsible open={isExpanded} onOpenChange={() => onToggleExpand(skill.name)}>
+      <div
+        className="skill-row relative border-l-4"
+        style={{ borderLeftColor: GEM_COLORS[skill.color] }}
+      >
         <div className="flex items-center">
           <CollapsibleTrigger asChild>
             <button
@@ -55,7 +58,7 @@ export function SkillRow({
             type="button"
             onClick={(e) => {
               e.stopPropagation();
-              onTogglePin();
+              onTogglePin(skill.name);
             }}
             className={`px-3 py-1 text-xs shrink-0 ${isPinned ? 'text-[#8b7a2e]' : 'text-muted-foreground hover:text-foreground'}`}
             aria-label={isPinned ? 'Unpin' : 'Pin'}
@@ -71,4 +74,4 @@ export function SkillRow({
       </div>
     </Collapsible>
   );
-}
+});

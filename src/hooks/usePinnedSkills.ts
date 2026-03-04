@@ -1,8 +1,22 @@
 import { useCallback, useState } from 'react';
 
-const STORAGE_KEY = 'imbued-pinned';
+const OLD_STORAGE_KEY = 'imbued-pinned';
+const STORAGE_KEY = 'imbued-pinned-v1';
+
+function migratePinned() {
+  try {
+    const old = localStorage.getItem(OLD_STORAGE_KEY);
+    if (old) {
+      localStorage.setItem(STORAGE_KEY, old);
+      localStorage.removeItem(OLD_STORAGE_KEY);
+    }
+  } catch {
+    // ignore
+  }
+}
 
 function loadPinned(): Set<string> {
+  migratePinned();
   try {
     const stored = localStorage.getItem(STORAGE_KEY);
     if (stored) return new Set(JSON.parse(stored) as string[]);
