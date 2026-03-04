@@ -20,21 +20,6 @@ describe('Search', () => {
     });
   });
 
-  it('filters to skills that have a given support (reverse lookup)', async () => {
-    const user = userEvent.setup();
-    render(<App />);
-    await screen.findByText('Arc');
-    // Enable support searching
-    await user.click(screen.getByLabelText('Include supports'));
-    const input = screen.getByPlaceholderText('Search skills…');
-    await user.type(input, 'Multistrike');
-    // Cleave and Cyclone both have Multistrike Support
-    await waitFor(() => {
-      expect(screen.getByText('Cleave')).toBeInTheDocument();
-      expect(screen.getByText('Cyclone')).toBeInTheDocument();
-    });
-  });
-
   it('supports fuzzy matching for partial/misspelled input', async () => {
     const user = userEvent.setup();
     render(<App />);
@@ -59,28 +44,6 @@ describe('Search', () => {
     await waitFor(() => {
       expect(screen.getByText('Cleave')).toBeInTheDocument();
       expect(screen.getByText('Arc')).toBeInTheDocument();
-    });
-  });
-
-  it('combines search and color filter correctly', async () => {
-    const user = userEvent.setup();
-    render(<App />);
-    await screen.findByText('Arc');
-    // Enable support searching
-    await user.click(screen.getByLabelText('Include supports'));
-    // Search for a support
-    const input = screen.getByPlaceholderText('Search skills…');
-    await user.type(input, 'Faster Casting');
-    // Arc and Frostbolt have "Faster Casting Support"
-    await waitFor(() => {
-      expect(screen.getByText('Arc')).toBeInTheDocument();
-      expect(screen.getByText('Frostbolt')).toBeInTheDocument();
-    });
-    // Apply blue filter - skills should still be visible (color filter affects support rows, not skills)
-    await user.click(screen.getByText('Int'));
-    await waitFor(() => {
-      expect(screen.getByText('Arc')).toBeInTheDocument();
-      expect(screen.getByText('Frostbolt')).toBeInTheDocument();
     });
   });
 

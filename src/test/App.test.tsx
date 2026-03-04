@@ -75,7 +75,7 @@ describe('App', () => {
     render(<App />);
     await screen.findByText('Arc');
     // All skills should remain visible regardless of filter
-    await user.click(screen.getByText('Str'));
+    await user.click(screen.getByText('Red'));
     expect(screen.getByText('Cleave')).toBeInTheDocument();
     expect(screen.getByText('Arc')).toBeInTheDocument();
     // Expand Cleave - should show only red supports when Str filter is active

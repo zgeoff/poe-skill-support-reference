@@ -1,6 +1,5 @@
 import { Badge } from '@/components/ui/badge';
 import type { GemColor } from '@/types';
-import { GEM_COLORS } from '@/types';
 
 interface SupportPillsProps {
   supports: Record<GemColor, string[]>;
@@ -23,10 +22,6 @@ export function SupportPills({ supports, colorFilter }: SupportPillsProps) {
         if (supports[color].length === 0) return null;
         return (
           <div key={color} className="flex flex-wrap gap-1.5 sm:gap-2 items-center">
-            <span
-              className="w-2 h-2 rounded-full shrink-0"
-              style={{ backgroundColor: GEM_COLORS[color] }}
-            />
             {supports[color].map((support) => (
               <Badge key={support} variant="secondary" className={`gem-pill-${color}`}>
                 {support.replace(/ Support$/, '')}

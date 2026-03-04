@@ -15,8 +15,6 @@ export default function App() {
     setQuery,
     colorFilter,
     setColorFilter,
-    searchSupports,
-    setSearchSupports,
     sortBy,
     sortDir,
     setSortBy,
@@ -56,16 +54,16 @@ export default function App() {
   return (
     <div className="min-h-screen bg-[#0a0a0f]">
       <div className="max-w-2xl mx-auto px-4">
-        <header className="py-6 relative">
-          <h1 className="text-2xl font-semibold text-[#e8e4d8] text-balance">
-            Path of Exile Imbued Gem Reference
+        <header className="pt-6 pb-2 relative">
+          <h1 className="text-2xl font-semibold text-[#e8e4d8] text-balance mb-2">
+            Path of Exile Skill Support Reference
           </h1>
-          <p className="text-sm text-[#6b6a63]">
-            Below is a list of skill gems and their possible imbuement outcomes. No guarantees on
-            accuracy of the data.
+          <p className="text-sm text-[#6b6a63] mb-0">
+            Below is a list of skill gems and their allowed support gems, useful for quickly
+            determining the potential imbuement outcomes with the new djinn coins in 3.28
           </p>
           <a
-            href="https://github.com/zgeoff/poe-imbued-gem-reference"
+            href="https://github.com/zgeoff/poe-skill-support-reference"
             target="_blank"
             rel="noopener noreferrer"
             className="absolute top-6 right-0 text-[#6b6a63] hover:text-[#a38d6d] transition-colors"
@@ -75,25 +73,26 @@ export default function App() {
           </a>
         </header>
         <div className="sticky top-0 z-10 bg-[#0a0a0f] pt-3 pb-3 space-y-3">
-          <SearchBar
-            query={query}
-            onQueryChange={setQuery}
-            searchSupports={searchSupports}
-            onSearchSupportsChange={setSearchSupports}
-          />
-          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
-            <ColorFilter activeColor={colorFilter} onColorChange={setColorFilter} />
-            <div className="flex gap-2 items-center">
-              <button
-                type="button"
-                onClick={collapseAll}
-                disabled={expandedCount === 0}
-                className="px-3 py-1 rounded-full text-sm font-medium transition-colors focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-[#0a0a0f] text-muted-foreground enabled:hover:text-foreground disabled:opacity-40 disabled:cursor-not-allowed"
-              >
-                <ChevronsDownUp size={14} className="inline -mt-0.5 mr-1" />
-                Collapse All
-              </button>
-              <SortControl sortBy={sortBy} sortDir={sortDir} onSortChange={setSortBy} />
+          <SearchBar query={query} onQueryChange={setQuery} />
+          <div className="flex items-center justify-between gap-2">
+            <div>
+              <span className="text-xs text-muted-foreground mb-1 block">Filter</span>
+              <ColorFilter activeColor={colorFilter} onColorChange={setColorFilter} />
+            </div>
+            <div>
+              <span className="text-xs text-muted-foreground mb-1 block">Sorting</span>
+              <div className="flex gap-2 items-center">
+                <SortControl sortBy={sortBy} sortDir={sortDir} onSortChange={setSortBy} />
+                <button
+                  type="button"
+                  onClick={collapseAll}
+                  disabled={expandedCount === 0}
+                  className="p-1 rounded-full transition-colors focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-[#0a0a0f] text-muted-foreground enabled:hover:text-foreground disabled:opacity-40 disabled:cursor-default"
+                  aria-label="Collapse All"
+                >
+                  <ChevronsDownUp size={14} />
+                </button>
+              </div>
             </div>
           </div>
         </div>

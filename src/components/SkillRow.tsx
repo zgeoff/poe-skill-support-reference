@@ -62,10 +62,9 @@ export const SkillRow = memo(function SkillRow({
               </div>
               <div className="flex items-center gap-2 shrink-0">
                 <span className="text-sm tabular-nums text-muted-foreground">
-                  {'['}
                   {(['red', 'green', 'blue'] as const).map((c, i) => (
                     <span key={c}>
-                      {i > 0 && '|'}
+                      {i > 0 && <span className="opacity-30"> · </span>}
                       <span
                         style={{
                           color: GEM_COLORS[c],
@@ -76,12 +75,7 @@ export const SkillRow = memo(function SkillRow({
                       </span>
                     </span>
                   ))}
-                  {']'}
                 </span>
-                <span
-                  className="w-2 h-2 rounded-full"
-                  style={{ backgroundColor: GEM_COLORS[skill.color] }}
-                />
               </div>
             </button>
           </CollapsibleTrigger>

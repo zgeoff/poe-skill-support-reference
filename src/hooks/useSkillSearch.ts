@@ -6,7 +6,6 @@ interface HashState {
   query: string;
   expanded: Set<string>;
   colorFilter: GemColor | 'all';
-  searchSupports: boolean;
   sortBy: SortBy;
   sortDir: SortDir;
 }
@@ -16,8 +15,6 @@ export interface UseSkillSearchReturn {
   setQuery: (query: string) => void;
   colorFilter: GemColor | 'all';
   setColorFilter: (color: GemColor | 'all') => void;
-  searchSupports: boolean;
-  setSearchSupports: (value: boolean) => void;
   sortBy: SortBy;
   sortDir: SortDir;
   setSortBy: (sort: SortBy) => void;
@@ -35,7 +32,6 @@ function parseHash(): HashState {
     query: params.get('q') ?? '',
     expanded: new Set(params.getAll('e')),
     colorFilter: (params.get('c') as GemColor | 'all') ?? 'all',
-    searchSupports: params.get('s') === '1',
     sortBy: (params.get('sort') as SortBy) ?? 'name',
     sortDir: (params.get('dir') as SortDir) ?? 'asc',
   };
@@ -46,7 +42,6 @@ function buildHash(state: HashState): string {
   if (state.query) params.set('q', state.query);
   for (const e of state.expanded) params.append('e', e);
   if (state.colorFilter !== 'all') params.set('c', state.colorFilter);
-  if (state.searchSupports) params.set('s', '1');
   if (state.sortBy !== 'name') params.set('sort', state.sortBy);
   if (state.sortDir !== 'asc') params.set('dir', state.sortDir);
   const str = params.toString();
@@ -59,7 +54,6 @@ export function useSkillSearch(skills: SkillGem[]): UseSkillSearchReturn {
   const [query, setQueryRaw] = useState(initial.query);
   const [debouncedQuery, setDebouncedQuery] = useState(initial.query);
   const [colorFilter, setColorFilterRaw] = useState<GemColor | 'all'>(initial.colorFilter);
-  const [searchSupports, setSearchSupportsRaw] = useState(initial.searchSupports);
   const [sortBy, setSortByRaw] = useState<SortBy>(initial.sortBy);
   const [sortDir, setSortDirRaw] = useState<SortDir>(initial.sortDir);
   const [expanded, setExpanded] = useState<Set<string>>(initial.expanded);
@@ -97,13 +91,11 @@ export function useSkillSearch(skills: SkillGem[]): UseSkillSearchReturn {
   // We need refs for the latest state so the hashchange listener always sees current values
   const queryRef = useRef(query);
   const colorFilterRef = useRef(colorFilter);
-  const searchSupportsRef = useRef(searchSupports);
   const sortByRef = useRef(sortBy);
   const sortDirRef = useRef(sortDir);
   useEffect(() => {
     queryRef.current = query;
     colorFilterRef.current = colorFilter;
-    searchSupportsRef.current = searchSupports;
     sortByRef.current = sortBy;
     sortDirRef.current = sortDir;
   });
@@ -115,7 +107,6 @@ export function useSkillSearch(skills: SkillGem[]): UseSkillSearchReturn {
       setQueryRaw(parsed.query);
       setDebouncedQuery(parsed.query);
       setColorFilterRaw(parsed.colorFilter);
-      setSearchSupportsRaw(parsed.searchSupports);
       setSortByRaw(parsed.sortBy);
       setSortDirRaw(parsed.sortDir);
       setExpanded(parsed.expanded);
@@ -135,7 +126,6 @@ export function useSkillSearch(skills: SkillGem[]): UseSkillSearchReturn {
         query: q,
         expanded: expandedRef.current,
         colorFilter: colorFilterRef.current,
-        searchSupports: searchSupportsRef.current,
         sortBy: sortByRef.current,
         sortDir: sortDirRef.current,
       };
@@ -151,7 +141,6 @@ export function useSkillSearch(skills: SkillGem[]): UseSkillSearchReturn {
         query: queryRef.current,
         expanded: expandedRef.current,
         colorFilter: color,
-        searchSupports: searchSupportsRef.current,
         sortBy: sortByRef.current,
         sortDir: sortDirRef.current,
       };
@@ -173,29 +162,12 @@ export function useSkillSearch(skills: SkillGem[]): UseSkillSearchReturn {
           query: queryRef.current,
           expanded: next,
           colorFilter: colorFilterRef.current,
-          searchSupports: searchSupportsRef.current,
           sortBy: sortByRef.current,
           sortDir: sortDirRef.current,
         };
         updateHash(state, false);
         return next;
       });
-    },
-    [updateHash],
-  );
-
-  const setSearchSupports = useCallback(
-    (value: boolean) => {
-      setSearchSupportsRaw(value);
-      const state: HashState = {
-        query: queryRef.current,
-        expanded: expandedRef.current,
-        colorFilter: colorFilterRef.current,
-        searchSupports: value,
-        sortBy: sortByRef.current,
-        sortDir: sortDirRef.current,
-      };
-      updateHash(state, false);
     },
     [updateHash],
   );
@@ -217,7 +189,6 @@ export function useSkillSearch(skills: SkillGem[]): UseSkillSearchReturn {
         query: queryRef.current,
         expanded: expandedRef.current,
         colorFilter: colorFilterRef.current,
-        searchSupports: searchSupportsRef.current,
         sortBy: sort,
         sortDir: newDir,
       };
@@ -234,7 +205,6 @@ export function useSkillSearch(skills: SkillGem[]): UseSkillSearchReturn {
       query: queryRef.current,
       expanded: new Set(),
       colorFilter: colorFilterRef.current,
-      searchSupports: searchSupportsRef.current,
       sortBy: sortByRef.current,
       sortDir: sortDirRef.current,
     };
@@ -247,7 +217,7 @@ export function useSkillSearch(skills: SkillGem[]): UseSkillSearchReturn {
   useEffect(() => {
     fuseSkillsRef.current = skills;
     let cancelled = false;
-    buildSearchIndex(skills, searchSupports).then((index) => {
+    buildSearchIndex(skills).then((index) => {
       if (!cancelled && fuseSkillsRef.current === skills) {
         setFuse(index);
       }
@@ -255,7 +225,7 @@ export function useSkillSearch(skills: SkillGem[]): UseSkillSearchReturn {
     return () => {
       cancelled = true;
     };
-  }, [skills, searchSupports]);
+  }, [skills]);
 
   const results = useMemo(() => {
     let filtered: SkillGem[];
@@ -271,26 +241,31 @@ export function useSkillSearch(skills: SkillGem[]): UseSkillSearchReturn {
     }
 
     const dir = sortDir === 'asc' ? 1 : -1;
-    if (sortBy === 'red' || sortBy === 'green' || sortBy === 'blue') {
-      filtered.sort(
-        (a, b) =>
-          dir * (a.supports[sortBy].length - b.supports[sortBy].length) ||
-          a.name.localeCompare(b.name),
-      );
+    if (sortBy === 'count') {
+      filtered.sort((a, b) => {
+        let aCount: number;
+        let bCount: number;
+        if (colorFilter !== 'all') {
+          aCount = a.supports[colorFilter].length;
+          bCount = b.supports[colorFilter].length;
+        } else {
+          aCount = a.supports.red.length + a.supports.green.length + a.supports.blue.length;
+          bCount = b.supports.red.length + b.supports.green.length + b.supports.blue.length;
+        }
+        return dir * (aCount - bCount) || a.name.localeCompare(b.name);
+      });
     } else if (!debouncedQuery.trim()) {
       filtered.sort((a, b) => dir * a.name.localeCompare(b.name));
     }
 
     return filtered;
-  }, [skills, debouncedQuery, fuse, sortBy, sortDir]);
+  }, [skills, debouncedQuery, fuse, sortBy, sortDir, colorFilter]);
 
   return {
     query,
     setQuery,
     colorFilter,
     setColorFilter,
-    searchSupports,
-    setSearchSupports,
     sortBy,
     sortDir,
     setSortBy,

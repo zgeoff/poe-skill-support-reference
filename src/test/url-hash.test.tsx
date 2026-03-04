@@ -42,7 +42,7 @@ describe('URL Hash', () => {
     const user = userEvent.setup();
     render(<App />);
     await screen.findByText('Arc');
-    await user.click(screen.getByText('Int'));
+    await user.click(screen.getByText('Blue'));
     await waitFor(() => {
       expect(window.location.hash).toContain('c=blue');
     });

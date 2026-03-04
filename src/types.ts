@@ -23,7 +23,7 @@ export interface SearchableSkill {
   supports: string;
 }
 
-export type SortBy = 'name' | 'red' | 'green' | 'blue';
+export type SortBy = 'name' | 'count';
 export type SortDir = 'asc' | 'desc';
 
 export type GemData = Record<GemColor, Record<string, SupportGem[]>>;

@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-A Path of Exile reference tool for skill gem imbuement outcomes. Single-page React app that displays skill gems, their colors (red/green/blue), and supported gem combinations. Deployed to GitHub Pages at `/poe-imbued-gem-reference/`.
+A Path of Exile reference tool for skill gem imbuement outcomes. Single-page React app that displays skill gems, their colors (red/green/blue), and supported gem combinations. Deployed to GitHub Pages at `/poe-skill-support-reference/`.
 
 ## Commands
 
