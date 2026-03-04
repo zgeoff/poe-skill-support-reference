@@ -65,6 +65,14 @@ export default function App() {
             Below is a list of skill gems and their allowed support gems, useful for quickly
             determining the potential imbuement outcomes with the new djinn coins in 3.28
           </p>
+          <div className="text-sm text-[#6b6a63] mt-1">
+            <p className="font-medium">Known issues:</p>
+            <ul className="list-disc list-inside">
+              <li>
+                Data is partially incomplete (ex. lifetap missing) - working on a re-extraction
+              </li>
+            </ul>
+          </div>
           <a
             href="https://github.com/zgeoff/poe-skill-support-reference"
             target="_blank"
